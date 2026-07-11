@@ -1,0 +1,531 @@
+@import "./styles/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+  /* SaaS Killer - Premium Dark Theme */
+  --background: 0 0% 0%;
+  --foreground: 0 0% 96%;
+
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 96%;
+
+  --popover: 0 0% 5%;
+  --popover-foreground: 0 0% 96%;
+
+  /* CTA Principal - Dourado */
+  --primary: 41 76% 60%;
+  --primary-foreground: 0 0% 5%;
+
+  /* Secundário */
+  --secondary: 0 0% 8%;
+  --secondary-foreground: 0 0% 96%;
+
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 45%;
+
+  /* Accent - DOURADO */
+  --accent: 41 76% 60%;          /* #E6B54A → dourado como destaque (token --gold) */
+  --accent-foreground: 0 0% 5%;
+
+  /* Erro/Alerta */
+  --destructive: 356 77% 57%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 10%;
+  --input: 0 0% 8%;
+  --ring: 41 76% 60%;
+
+  --radius: 0.75rem;
+  
+  /* Design Tokens */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-gold: 0 4px 20px rgba(var(--gold-rgb), 0.15);
+  
+  /* Brand Colors */
+  --brand-gold: 41 76% 60%;
+  --brand-text-dark: 0 0% 5%;
+  --brand-text-light: 0 0% 96%;
+  
+  /* Tiles Effect */
+    --tile: rgba(var(--gold-rgb), 0.4);
+    --tile-border: rgba(var(--gold-rgb), 0.2);
+
+  /* Dashboard Theme (Dark) - For Future App Panels */
+  --dashboard-background: 0 0% 6%;
+  --dashboard-foreground: 0 0% 90%;
+  --dashboard-card: 0 0% 12%;
+  
+  --sidebar-background: 0 0% 6%;
+  --sidebar-foreground: 0 0% 90%;
+  --sidebar-primary: 158 100% 33%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 0 0% 17%;
+  --sidebar-accent-foreground: 0 0% 90%;
+  --sidebar-border: 0 0% 17%;
+  --sidebar-ring: 158 100% 33%;
+  }
+
+  body {
+    font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-void);
+    color: var(--text-primary);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Clash Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 700;
+  }
+
+  button {
+    font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 600;
+  }
+
+  /* Custom scrollbar — thumb roxo escuro fino (ambiente), track transparente */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(var(--royal-deep-rgb), 0.45);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--royal-rgb), 0.5);
+  }
+
+  /* Selection */
+  ::selection {
+    background: rgba(var(--electric-rgb), 0.25);
+    color: var(--text-primary);
+  }
+}
+
+/* Hero — badge com shimmer percorrendo a borda a cada 5s */
+.badge-shimmer {
+  position: relative;
+  background: var(--bg-surface);
+  border: 1px solid rgba(var(--electric-rgb), 0.5);
+  overflow: hidden;
+}
+
+.badge-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(var(--electric-hot-rgb), 0.25) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  animation: badge-shimmer-sweep 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes badge-shimmer-sweep {
+  0%, 70% { transform: translateX(-100%); }
+  85%, 100% { transform: translateX(100%); }
+}
+
+/* Hero mobile — dots flutuando (fallback sem WebGL) */
+@keyframes hero-dot-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge-shimmer::after { animation: none; }
+}
+
+/* Recursos — micro-preview anima sutilmente no hover do card */
+.recurso-card:hover .preview-shape {
+  animation: preview-pulse 1.6s ease-in-out infinite;
+}
+
+.recurso-card:hover .preview-shape:nth-child(2) { animation-delay: 0.15s; }
+
+@keyframes preview-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recurso-card:hover .preview-shape { animation: none; }
+}
+
+/* Planos — borda conic-gradient rotativa do card Pro (técnica de mask) */
+@property --pro-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.pro-conic-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--pro-angle),
+    var(--electric),
+    var(--volt),
+    var(--electric)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: pro-border-spin 6s linear infinite;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+@keyframes pro-border-spin {
+  to { --pro-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-conic-border { animation: none; }
+}
+
+/* Footer — links com underline deslizando da esquerda */
+.footer-link {
+  position: relative;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+  width: fit-content;
+}
+
+.footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: var(--electric-hot);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--electric-hot);
+}
+
+.footer-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* CTA final — glow forte com pulso no hover */
+.cta-final-glow {
+  box-shadow: 0 0 40px rgba(var(--electric-rgb), 0.45);
+}
+
+.cta-final-glow:hover {
+  animation: cta-glow-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes cta-glow-pulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(var(--electric-rgb), 0.45); }
+  50% { box-shadow: 0 0 64px rgba(var(--electric-rgb), 0.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-final-glow:hover { animation: none; }
+}
+
+/* Atmosfera global — drift lentíssimo dos blobs */
+@keyframes atmosphere-drift-a {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(5%, 3%); }
+}
+
+@keyframes atmosphere-drift-b {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-5%, -3%); }
+}
+
+@keyframes shadanim {
+  0% {
+    background-position: 100% -100%;
+  }
+  100% {
+    background-position: -100% 100%;
+  }
+}
+
+@layer utilities {
+  .animate-shadanim {
+    animation: shadanim 15s linear infinite;
+  }
+}
+
+/* Animated Glow Card Styles */
+.card-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.card-backdrop {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle at 50% 50%, rgba(var(--gold-rgb), 0.2), transparent 60%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-canvas:hover .card-backdrop {
+  opacity: 1;
+}
+
+.glow-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  overflow: visible;
+  z-index: 1;
+}
+
+.border-element {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.border-left,
+.border-right {
+  width: 2px;
+  height: 100%;
+  top: 0;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(var(--gold-rgb), 0) 20%,
+    rgba(var(--gold-rgb), 0.8) 50%, 
+    rgba(var(--gold-rgb), 0) 80%,
+    transparent 100%
+  );
+  animation: borderGlowVertical 4s ease-in-out infinite;
+}
+
+.border-left {
+  left: -1px;
+}
+
+.border-right {
+  right: -1px;
+  animation-delay: 2s;
+}
+
+.border-top,
+.border-bottom {
+  height: 2px;
+  width: 100%;
+  left: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(var(--gold-rgb), 0) 20%,
+    rgba(var(--gold-rgb), 0.8) 50%, 
+    rgba(var(--gold-rgb), 0) 80%,
+    transparent 100%
+  );
+  animation: borderGlowHorizontal 4s ease-in-out infinite;
+}
+
+.border-top {
+  top: -1px;
+  animation-delay: 1s;
+}
+
+.border-bottom {
+  bottom: -1px;
+  animation-delay: 3s;
+}
+
+.card-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  background: hsl(var(--card));
+  border-radius: 1rem;
+  border: 1px solid hsl(var(--border));
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glow-card:hover .card-content {
+  border-color: rgba(var(--gold-rgb), 0.5);
+  box-shadow: 0 0 30px rgba(var(--gold-rgb), 0.2);
+}
+
+@keyframes borderGlowVertical {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+}
+
+@keyframes borderGlowHorizontal {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+}
+
+/* Performance Optimizations */
+@layer utilities {
+  .animate-scroll {
+    will-change: transform, opacity;
+  }
+  
+  .optimize-animations {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
+
+/* Marquee Animation for Integration Logos */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+}
+
+.pause-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Marquee Animation for How It Works steps */
+@keyframes steps-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Move exatamente 4 cards (350px cada) + 4 gaps (48px cada) = 1592px */
+    transform: translateX(calc(-350px * 4 - 48px * 4));
+  }
+}
+
+.animate-steps-marquee {
+  animation: steps-marquee 8s linear infinite;
+}
+
+/* Floating Bubbles Animation */
+@keyframes float-up {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--bubble-opacity, 0.2);
+  }
+  90% {
+    opacity: var(--bubble-opacity, 0.2);
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+}
+
+.animate-float-up {
+  animation: float-up linear infinite;
+}
+
+/* Gradient text utility */
+.text-gradient-gold {
+  background: linear-gradient(to right, var(--gold), var(--gold-hot), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass morphism utility */
+.glass {
+  background: rgba(14, 14, 14, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Subtle pulse glow animation */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(var(--gold-rgb), 0.1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(var(--gold-rgb), 0.2);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
