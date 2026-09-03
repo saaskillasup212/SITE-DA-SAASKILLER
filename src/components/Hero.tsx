@@ -1,7 +1,9 @@
 import { Component, lazy, type ReactNode, Suspense } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight, Layers3 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { usePerformance } from "@/hooks/use-performance";
+import { useAffiliate } from "@/contexts/AffiliateContext";
 import saasCreator from "@/assets/saas-creator.gif";
 import pageBuilder from "@/assets/page-builder.gif";
 
@@ -93,6 +95,10 @@ const Hero = () => {
         initial: { opacity: 0, y: 24, filter: "blur(8px)" },
         animate: { opacity: 1, y: 0, filter: "blur(0px)" },
       };
+
+  const navigate = useNavigate();
+  const { affiliateSlug } = useAffiliate();
+  const planosUrl = affiliateSlug ? `/${affiliateSlug}/planos` : "/planos";
 
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -190,7 +196,10 @@ const Hero = () => {
             <button
               type="button"
               className="button-primary"
-              onClick={() => scrollTo("pricing")}
+              onClick={() => {
+                navigate(planosUrl);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
             >
               Começar minha operação
               <ArrowRight aria-hidden />

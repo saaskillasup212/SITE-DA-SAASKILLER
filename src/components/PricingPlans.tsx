@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
+import { useAffiliate } from "@/contexts/AffiliateContext";
 import {
   ArrowRight,
   Check,
@@ -126,10 +127,12 @@ const PricingPlans = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const viewedRef = useRef(false);
   const { shouldReduceMotion } = usePerformance();
-  const location = useLocation();
+  const { normalizedAffiliate } = useAffiliate();
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState("");
   const [couponError, setCouponError] = useState("");
+
+  const activeCoupon = appliedCoupon || (normalizedAffiliate ? normalizedAffiliate.toUpperCase() : "");
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -180,17 +183,17 @@ const PricingPlans = () => {
   };
 
   const handleCTA = (cycle: BillingCycle) => {
-    const isRuanAffiliate = location.pathname === "/ruan";
-    const isAffiliateOnlyCoupon = appliedCoupon === "MATHIAS" || appliedCoupon === "RUAN";
-    const priceType = appliedCoupon && !isAffiliateOnlyCoupon ? "discounted" : "regular";
+    const isRuanAffiliate = activeCoupon === "RUAN";
+    const isAffiliateOnlyCoupon = activeCoupon === "MATHIAS" || activeCoupon === "RUAN";
+    const priceType = activeCoupon && !isAffiliateOnlyCoupon ? "discounted" : "regular";
     const target = isRuanAffiliate
       ? RUAN_CHECKOUT_URLS[cycle][priceType]
-      : buildRegistrationUrl(cycle, appliedCoupon || undefined);
+      : buildRegistrationUrl(cycle, activeCoupon || undefined);
     const eventParameters = {
       plan: OFFER.plan,
       cycle,
       origin: "pricing",
-      coupon_applied: Boolean(appliedCoupon),
+      coupon_applied: Boolean(activeCoupon),
     };
 
     trackEvent("pricing_cta_clicked", eventParameters);
@@ -198,8 +201,8 @@ const PricingPlans = () => {
     window.location.assign(target);
   };
 
-  const hasAnyCoupon = Boolean(appliedCoupon);
-  const isAffiliateOnly = appliedCoupon === "MATHIAS" || appliedCoupon === "RUAN";
+  const hasAnyCoupon = Boolean(activeCoupon);
+  const isAffiliateOnly = activeCoupon === "MATHIAS" || activeCoupon === "RUAN";
   const isDiscounted = hasAnyCoupon && !isAffiliateOnly;
 
   const monthlyAmountCents = getSaaSKillerPriceCents(
@@ -313,7 +316,7 @@ const PricingPlans = () => {
                   (isAffiliateOnly
                     ? "Cupom efetuado! Esse colaborador receberá 50% do valor da sua venda."
                     : isDiscounted
-                      ? `Cupom ${appliedCoupon} aplicado com sucesso.`
+                      ? `Cupom ${activeCoupon} aplicado com sucesso.`
                       : "Digite o código para visualizar os preços especiais.")}
               </span>
             </form>

@@ -41,8 +41,18 @@ export const OFFER = {
         "https://checkout.applyfy.com.br/checkout/cmrxrxc6b01h901q44mkb03ph?offer=339HDAH",
     },
   },
-  validCoupons: ["copa", "copa26", "copa2026", "saaskiller", "desconto50", "black", "mathias", "ruan"],
+  validCoupons: ["copa", "copa26", "copa2026", "saaskiller", "desconto50", "black", "mathias", "ruan", "r1an"],
 } as const;
+
+export const AFFILIATE_CODES: Record<string, string> = {
+  "r1an": "ruan",
+  "m4thias": "mathias"
+};
+
+export const getNormalizedCoupon = (coupon: string) => {
+  const lower = coupon.toLowerCase();
+  return AFFILIATE_CODES[lower] || lower;
+};
 
 export const buildRegistrationUrl = (
   cycle: BillingCycle,
@@ -50,8 +60,9 @@ export const buildRegistrationUrl = (
   search = typeof window !== "undefined" ? window.location.search : "",
 ) => {
   const sourceParams = new URLSearchParams(search);
-  const isAffiliateOnly = coupon === "MATHIAS" || coupon === "RUAN";
-  const priceType = coupon && !isAffiliateOnly ? "discounted" : "regular";
+  const normalizedCoupon = coupon ? getNormalizedCoupon(coupon).toUpperCase() : undefined;
+  const isAffiliateOnly = normalizedCoupon === "MATHIAS" || normalizedCoupon === "RUAN";
+  const priceType = normalizedCoupon && !isAffiliateOnly ? "discounted" : "regular";
   const checkoutUrl = new URL(OFFER.checkoutUrls[cycle][priceType]);
 
   if (coupon) {

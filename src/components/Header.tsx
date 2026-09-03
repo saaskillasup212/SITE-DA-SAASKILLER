@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAffiliate } from "@/contexts/AffiliateContext";
 
 const baseNavLinks = [
   { label: "Recursos", id: "benefits" },
@@ -16,8 +17,10 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { affiliateSlug } = useAffiliate();
 
   const isExtensionPage = location.pathname === "/extensao-creditos-lovable" || location.pathname === "/creditos-infinitos";
+  const planosUrl = affiliateSlug ? `/${affiliateSlug}/planos` : "/planos";
 
   const navLinks = baseNavLinks.map((link) => {
     if (link.to === "/extensao-creditos-lovable" && isExtensionPage) {
@@ -25,6 +28,13 @@ const Header = () => {
         label: "SaaSKiller",
         mobileLabel: "Início",
         to: "/",
+      };
+    }
+    if (link.id === "pricing") {
+      return {
+        ...link,
+        to: planosUrl,
+        id: undefined, // remove id so it uses 'to' logic
       };
     }
     return link;
@@ -106,7 +116,10 @@ const Header = () => {
             <button
               type="button"
               className="button-primary button-primary--header"
-              onClick={() => scrollToSection("pricing")}
+              onClick={() => {
+                navigate(planosUrl);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
             >
               Começar agora
               <ArrowRight aria-hidden />
@@ -170,7 +183,11 @@ const Header = () => {
               <button
                 type="button"
                 className="button-primary"
-                onClick={() => scrollToSection("pricing")}
+                onClick={() => {
+                  navigate(planosUrl);
+                  setMobileMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
               >
                 Começar agora
                 <ArrowRight aria-hidden />
