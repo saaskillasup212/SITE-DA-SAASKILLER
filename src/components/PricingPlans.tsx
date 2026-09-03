@@ -184,7 +184,7 @@ const PricingPlans = () => {
 
   const handleCTA = (cycle: BillingCycle) => {
     const isRuanAffiliate = activeCoupon === "RUAN";
-    const isAffiliateOnlyCoupon = activeCoupon === "MATHIAS" || activeCoupon === "RUAN";
+    const isAffiliateOnlyCoupon = activeCoupon === "MATHIAS" || activeCoupon === "RUAN" || activeCoupon === "GUILHERME";
     const priceType = activeCoupon && !isAffiliateOnlyCoupon ? "discounted" : "regular";
     const target = isRuanAffiliate
       ? RUAN_CHECKOUT_URLS[cycle][priceType]
@@ -202,7 +202,7 @@ const PricingPlans = () => {
   };
 
   const hasAnyCoupon = Boolean(activeCoupon);
-  const isAffiliateOnly = activeCoupon === "MATHIAS" || activeCoupon === "RUAN";
+  const isAffiliateOnly = activeCoupon === "MATHIAS" || activeCoupon === "RUAN" || activeCoupon === "GUILHERME";
   const isDiscounted = hasAnyCoupon && !isAffiliateOnly;
 
   const monthlyAmountCents = getSaaSKillerPriceCents(

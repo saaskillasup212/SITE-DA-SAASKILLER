@@ -41,12 +41,13 @@ export const OFFER = {
         "https://checkout.applyfy.com.br/checkout/cmrxrxc6b01h901q44mkb03ph?offer=339HDAH",
     },
   },
-  validCoupons: ["copa", "copa26", "copa2026", "saaskiller", "desconto50", "black", "mathias", "ruan", "r1an"],
+  validCoupons: ["copa", "copa26", "copa2026", "saaskiller", "desconto50", "black", "mathias", "ruan", "r1an", "guilherme", "gU1h"],
 } as const;
 
 export const AFFILIATE_CODES: Record<string, string> = {
   "r1an": "ruan",
-  "m4thias": "mathias"
+  "m4thias": "mathias",
+  "gu1h": "guilherme"
 };
 
 export const getNormalizedCoupon = (coupon: string) => {
@@ -61,12 +62,16 @@ export const buildRegistrationUrl = (
 ) => {
   const sourceParams = new URLSearchParams(search);
   const normalizedCoupon = coupon ? getNormalizedCoupon(coupon).toUpperCase() : undefined;
-  const isAffiliateOnly = normalizedCoupon === "MATHIAS" || normalizedCoupon === "RUAN";
+  const isAffiliateOnly = normalizedCoupon === "MATHIAS" || normalizedCoupon === "RUAN" || normalizedCoupon === "GUILHERME";
   const priceType = normalizedCoupon && !isAffiliateOnly ? "discounted" : "regular";
   const checkoutUrl = new URL(OFFER.checkoutUrls[cycle][priceType]);
 
   if (coupon) {
     checkoutUrl.searchParams.set("coupon", coupon);
+  }
+
+  if (normalizedCoupon === "GUILHERME") {
+    checkoutUrl.searchParams.set("code", "8w3oieb");
   }
 
   ALLOWED_UTM_PARAMS.forEach((parameter) => {

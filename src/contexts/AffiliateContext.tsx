@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { getNormalizedCoupon, AFFILIATE_CODES } from "@/config/offer";
+import { getNormalizedCoupon, AFFILIATE_CODES, OFFER } from "@/config/offer";
 
 interface AffiliateContextType {
   affiliateSlug: string | null;
@@ -26,13 +26,8 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({
     const pathParts = location.pathname.split("/").filter(Boolean);
     if (pathParts.length > 0) {
       const possibleAffiliate = pathParts[0].toLowerCase();
-      // Verifica se é um afiliado válido (se está no AFFILIATE_CODES ou se é ruan/mathias/r1an)
-      if (
-        AFFILIATE_CODES[possibleAffiliate] ||
-        possibleAffiliate === "ruan" ||
-        possibleAffiliate === "mathias" ||
-        possibleAffiliate === "r1an"
-      ) {
+      // Verifica se é um afiliado válido usando a lista de validCoupons
+      if (OFFER.validCoupons.includes(possibleAffiliate as any)) {
         setAffiliateSlug(possibleAffiliate);
         localStorage.setItem("affiliateSlug", possibleAffiliate);
       }
