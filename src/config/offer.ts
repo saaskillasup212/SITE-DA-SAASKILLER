@@ -41,13 +41,14 @@ export const OFFER = {
         "https://checkout.applyfy.com.br/checkout/cmrxrxc6b01h901q44mkb03ph?offer=339HDAH",
     },
   },
-  validCoupons: ["copa", "copa26", "copa2026", "saaskiller", "desconto50", "black", "mathias", "ruan", "r1an", "guilherme", "gu1h", "ayanna"],
+  validCoupons: ["copa", "copa26", "copa2026", "saaskiller", "desconto50", "black", "mathias", "ruan", "r1an", "guilherme", "gu1h", "ayanna", "ay4nn4"],
 } as const;
 
 export const AFFILIATE_CODES: Record<string, string> = {
   "r1an": "ruan",
   "m4thias": "mathias",
-  "gu1h": "guilherme"
+  "gu1h": "guilherme",
+  "ay4nn4": "ayanna"
 };
 
 export const getNormalizedCoupon = (coupon: string) => {
