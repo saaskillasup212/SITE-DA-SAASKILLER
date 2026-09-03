@@ -58,19 +58,21 @@ export const getNormalizedCoupon = (coupon: string) => {
 export const buildRegistrationUrl = (
   cycle: BillingCycle,
   coupon?: string,
+  affiliate?: string | null,
   search = typeof window !== "undefined" ? window.location.search : "",
 ) => {
   const sourceParams = new URLSearchParams(search);
   const normalizedCoupon = coupon ? getNormalizedCoupon(coupon).toUpperCase() : undefined;
-  const isAffiliateOnly = normalizedCoupon === "MATHIAS" || normalizedCoupon === "RUAN" || normalizedCoupon === "GUILHERME";
-  const priceType = normalizedCoupon && !isAffiliateOnly ? "discounted" : "regular";
+  const isAffiliateCoupon = normalizedCoupon === "MATHIAS" || normalizedCoupon === "RUAN" || normalizedCoupon === "GUILHERME";
+  const priceType = normalizedCoupon && !isAffiliateCoupon ? "discounted" : "regular";
   const checkoutUrl = new URL(OFFER.checkoutUrls[cycle][priceType]);
 
   if (coupon) {
     checkoutUrl.searchParams.set("coupon", coupon);
   }
 
-  if (normalizedCoupon === "GUILHERME") {
+  // Se o afiliado na URL for o Guilherme ou se o cupom digitado for o Guilherme
+  if (affiliate === "guilherme" || normalizedCoupon === "GUILHERME") {
     checkoutUrl.searchParams.set("code", "8w3oieb");
   }
 

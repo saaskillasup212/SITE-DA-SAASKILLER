@@ -132,7 +132,8 @@ const PricingPlans = () => {
   const [appliedCoupon, setAppliedCoupon] = useState("");
   const [couponError, setCouponError] = useState("");
 
-  const activeCoupon = appliedCoupon || (normalizedAffiliate ? normalizedAffiliate.toUpperCase() : "");
+  // O activeCoupon agora é APENAS o cupom digitado pelo usuário
+  const activeCoupon = appliedCoupon;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -188,7 +189,7 @@ const PricingPlans = () => {
     const priceType = activeCoupon && !isAffiliateOnlyCoupon ? "discounted" : "regular";
     const target = isRuanAffiliate
       ? RUAN_CHECKOUT_URLS[cycle][priceType]
-      : buildRegistrationUrl(cycle, activeCoupon || undefined);
+      : buildRegistrationUrl(cycle, activeCoupon || undefined, normalizedAffiliate);
     const eventParameters = {
       plan: OFFER.plan,
       cycle,
@@ -202,8 +203,11 @@ const PricingPlans = () => {
   };
 
   const hasAnyCoupon = Boolean(activeCoupon);
-  const isAffiliateOnly = activeCoupon === "MATHIAS" || activeCoupon === "RUAN" || activeCoupon === "GUILHERME";
-  const isDiscounted = hasAnyCoupon && !isAffiliateOnly;
+  const isAffiliateCoupon = activeCoupon === "MATHIAS" || activeCoupon === "RUAN" || activeCoupon === "GUILHERME";
+  const isDiscounted = hasAnyCoupon && !isAffiliateCoupon;
+  
+  // Flag visual caso haja afiliado na URL, mas não tenha cupom aplicado
+  const isSupportingAffiliate = Boolean(normalizedAffiliate) && !hasAnyCoupon;
 
   const monthlyAmountCents = getSaaSKillerPriceCents(
     "monthly",
@@ -251,10 +255,10 @@ const PricingPlans = () => {
               </span>
               <div className="plans-coupon__intro-text">
                 <span className="plans-coupon__eyebrow">
-                  {isAffiliateOnly ? "APOIO A COLABORADOR" : "CONDIÇÃO ESPECIAL"}
+                  {isAffiliateCoupon ? "APOIO A COLABORADOR" : (isSupportingAffiliate ? "VOCÊ FOI INDICADO" : "CONDIÇÃO ESPECIAL")}
                 </span>
                 <strong className="plans-coupon__title">
-                  {isAffiliateOnly
+                  {isAffiliateCoupon
                     ? "Cupom de colaborador ativado"
                     : isDiscounted
                       ? "Preço de cupom liberado"
@@ -309,15 +313,17 @@ const PricingPlans = () => {
                     : hasAnyCoupon
                       ? " is-success"
                       : ""
-                }${isAffiliateOnly ? " is-affiliate" : ""}`}
+                }${isAffiliateCoupon || isSupportingAffiliate ? " is-affiliate" : ""}`}
                 role="status"
               >
                 {couponError ||
-                  (isAffiliateOnly
+                  (isAffiliateCoupon
                     ? "Cupom efetuado! Esse colaborador receberá 50% do valor da sua venda."
                     : isDiscounted
                       ? `Cupom ${activeCoupon} aplicado com sucesso.`
-                      : "Digite o código para visualizar os preços especiais.")}
+                      : isSupportingAffiliate
+                        ? "Sua compra apoiará o afiliado. Adicione um cupom de desconto se tiver."
+                        : "Digite o código para visualizar os preços especiais.")}
               </span>
             </form>
           </div>
