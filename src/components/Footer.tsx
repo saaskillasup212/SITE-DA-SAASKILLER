@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
-import footerLogoGold from "@/assets/footer-logo-gold.png";
 import { Mail } from "lucide-react";
-
-/**
- * FOOTER — PATCH 7 (Tempestade Elétrica Premium).
- * Grid: logo+tagline | Produto | Suporte | Legal.
- * Aviso Legal (proteção jurídica) e dados da empresa mantidos.
- */
+import LightningMark from "./LightningMark";
 
 const scrollTo = (id: string) =>
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -38,17 +32,13 @@ const Footer = () => {
           {/* Logo + tagline */}
           <div className="col-span-2">
             <div className="flex items-center gap-3 mb-3">
-              <img
-                src={footerLogoGold}
-                alt="SaaSKiller Logo"
-                className="w-8 h-8 object-contain"
-              />
+              <LightningMark className="w-8 h-8" title="SaaSKiller" />
               <span className="font-display font-semibold text-lg text-[var(--text-primary)]">
-                SaaS Killer
+              SaaSKiller
               </span>
             </div>
             <p className="text-sm text-[var(--text-muted)] max-w-[280px] leading-relaxed">
-              Crie, lance e venda Micro-SaaS com IA — do PRD ao primeiro cliente.
+              A operação do founder solo — da ideia ao primeiro cliente.
             </p>
             <div className="flex items-center gap-2 mt-4">
               <Mail className="w-4 h-4 text-[var(--electric)]" />
@@ -65,8 +55,9 @@ const Footer = () => {
             </h4>
             <div className="flex flex-col gap-2.5">
               <FooterAnchor id="benefits">Recursos</FooterAnchor>
+              <FooterAnchor id="how-it-works">Como funciona</FooterAnchor>
+              <FooterAnchor id="quem-somos">Quem somos</FooterAnchor>
               <FooterAnchor id="pricing">Planos</FooterAnchor>
-              <FooterAnchor id="extensao">Extensão</FooterAnchor>
             </div>
           </div>
 
@@ -102,31 +93,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Aviso Legal — proteção jurídica, não remover */}
-        <div
-          className="max-w-3xl mx-auto mb-10 p-4 rounded-xl"
-          style={{
-            background: "var(--bg-surface)",
-            border: "1px solid rgba(var(--royal-rgb), 0.08)",
-          }}
-        >
-          <p className="text-xs text-[var(--text-muted)] opacity-80 text-center leading-relaxed">
-            <strong className="text-[var(--text-muted)]">Aviso Legal:</strong> Os
-            resultados apresentados neste site são exemplos e podem variar de acordo com
-            diversos fatores, incluindo, mas não se limitando a: dedicação, conhecimento
-            prévio, mercado de atuação e execução das estratégias. Não garantimos
-            resultados específicos. Este produto não garante a obtenção de resultados.
-            Qualquer referência ao desempenho de uma estratégia não deve ser interpretada
-            como uma garantia de resultados.
-          </p>
-        </div>
-
-        {/* Dados da empresa */}
-        <div className="text-center mb-8 space-y-1">
-          <p className="text-xs text-[var(--text-muted)] opacity-60">
-            Razão Social: Infinity · CNPJ: 58.689.326/0001-58
-          </p>
-        </div>
 
         {/* Base */}
         <div
@@ -134,7 +100,7 @@ const Footer = () => {
           style={{ borderTop: "1px solid rgba(var(--royal-rgb), 0.08)" }}
         >
           <p className="text-xs text-[var(--text-muted)]">
-            © {currentYear} SaaS Killer. Todos os direitos reservados.
+            © {currentYear} SaaSKiller. Todos os direitos reservados.
           </p>
           <p className="text-xs text-[var(--text-muted)]">
             Feito com ⚡ por founders, para founders

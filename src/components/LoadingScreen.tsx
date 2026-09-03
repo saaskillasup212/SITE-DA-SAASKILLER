@@ -1,6 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "@/assets/gold-lightning-logo.png";
 import { useIOSCheck } from "@/hooks/use-ios-check";
+import LightningMark from "./LightningMark";
+
+/* Keyframes do framer-motion não resolvem var() — constante derivada de tokens.css */
+const GOLD_RGB = "242, 185, 59"; /* --gold-rgb */
 
 interface LoadingScreenProps {
   isLoading: boolean;
@@ -22,7 +25,7 @@ const LoadingScreen = ({ isLoading }: LoadingScreenProps) => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/70 pointer-events-none" />
           
           {/* Glow central dourado sutil */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(230,181,74,0.08)_0%,transparent_60%)] pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--gold-rgb),0.08)_0%,transparent_60%)] pointer-events-none" />
 
           <div className="relative text-center z-10">
             {isIOS ? (
@@ -33,7 +36,7 @@ const LoadingScreen = ({ isLoading }: LoadingScreenProps) => {
                   <div 
                     className="absolute inset-0 rounded-full animate-spin"
                     style={{
-                      background: 'conic-gradient(from 0deg, transparent, rgba(230, 181, 74, 0.8), transparent)',
+                      background: `conic-gradient(from 0deg, transparent, rgba(${GOLD_RGB}, 0.8), transparent)`,
                       maskImage: 'radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px))',
                       WebkitMaskImage: 'radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px))',
                       animationDuration: '2s',
@@ -41,13 +44,9 @@ const LoadingScreen = ({ isLoading }: LoadingScreenProps) => {
                   />
                   
                   {/* Logo com glow */}
-                  <img
-                    src={logo}
-                    alt="SaaSKiller"
+                  <LightningMark
+                    title="SaaSKiller"
                     className="absolute inset-0 m-auto w-20 h-20 sm:w-24 sm:h-24 animate-pulse"
-                    style={{
-                      filter: 'drop-shadow(0 0 25px rgba(230, 181, 74, 0.6))',
-                    }}
                   />
                 </div>
 
@@ -66,7 +65,7 @@ const LoadingScreen = ({ isLoading }: LoadingScreenProps) => {
                   <motion.div
                     className="absolute inset-0 rounded-full"
                     style={{
-                      background: 'conic-gradient(from 0deg, transparent, rgba(230, 181, 74, 0.8), transparent)',
+                      background: `conic-gradient(from 0deg, transparent, rgba(${GOLD_RGB}, 0.8), transparent)`,
                       maskImage: 'radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px))',
                       WebkitMaskImage: 'radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px))',
                     }}
@@ -82,7 +81,7 @@ const LoadingScreen = ({ isLoading }: LoadingScreenProps) => {
                   <motion.div
                     className="absolute inset-2 rounded-full opacity-50"
                     style={{
-                      background: 'conic-gradient(from 180deg, transparent, rgba(230, 181, 74, 0.5), transparent)',
+                      background: `conic-gradient(from 180deg, transparent, rgba(${GOLD_RGB}, 0.5), transparent)`,
                       maskImage: 'radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px))',
                       WebkitMaskImage: 'radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px))',
                     }}
@@ -95,19 +94,17 @@ const LoadingScreen = ({ isLoading }: LoadingScreenProps) => {
                   />
 
                   {/* Logo com glow pulsante */}
-                  <motion.img
-                    src={logo}
-                    alt="SaaSKiller"
+                  <motion.div
                     className="absolute inset-0 m-auto w-20 h-20 sm:w-24 sm:h-24"
                     style={{
-                      filter: 'drop-shadow(0 0 25px rgba(230, 181, 74, 0.6))',
+                      filter: `drop-shadow(0 0 25px rgba(${GOLD_RGB}, 0.6))`,
                     }}
                     animate={{
                       scale: [1, 1.05, 1],
                       filter: [
-                        'drop-shadow(0 0 25px rgba(230, 181, 74, 0.6))',
-                        'drop-shadow(0 0 35px rgba(230, 181, 74, 0.8))',
-                        'drop-shadow(0 0 25px rgba(230, 181, 74, 0.6))',
+                        `drop-shadow(0 0 25px rgba(${GOLD_RGB}, 0.6))`,
+                        `drop-shadow(0 0 35px rgba(${GOLD_RGB}, 0.8))`,
+                        `drop-shadow(0 0 25px rgba(${GOLD_RGB}, 0.6))`,
                       ],
                     }}
                     transition={{
@@ -115,7 +112,9 @@ const LoadingScreen = ({ isLoading }: LoadingScreenProps) => {
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                  />
+                  >
+                    <LightningMark className="h-full w-full" title="SaaSKiller" />
+                  </motion.div>
                 </div>
 
                 {/* Texto elegante */}

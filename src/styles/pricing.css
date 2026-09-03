@@ -1,0 +1,725 @@
+.pricing-section .plans-heading {
+  max-width: 820px;
+  margin: 0 auto 36px;
+}
+
+.pricing-section .plans-coupon {
+  position: relative;
+  z-index: 2;
+  max-width: 1080px;
+  margin: 0 auto 22px;
+  padding: 1px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: linear-gradient(
+    115deg,
+    rgba(var(--royal-rgb), 0.45),
+    rgba(255, 255, 255, 0.12) 48%,
+    rgba(var(--gold-rgb), 0.52)
+  );
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.3);
+}
+
+.pricing-section .plans-coupon.is-active {
+  background: linear-gradient(
+    115deg,
+    rgba(var(--success-rgb), 0.7),
+    rgba(var(--gold-rgb), 0.5)
+  );
+}
+
+.pricing-section .plans-coupon__content {
+  min-width: 0;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.8fr);
+  align-items: center;
+  gap: 24px;
+  border-radius: 17px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(var(--royal-rgb), 0.11), transparent 38%),
+    linear-gradient(125deg, rgba(18, 14, 25, 0.99), rgba(7, 6, 9, 0.99));
+}
+
+.pricing-section .plans-coupon__intro {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pricing-section .plans-coupon__icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  color: var(--gold-hot);
+  border: 1px solid rgba(var(--gold-rgb), 0.25);
+  border-radius: 12px;
+  background: rgba(var(--gold-rgb), 0.08);
+}
+
+.pricing-section .plans-coupon.is-active .plans-coupon__icon {
+  color: var(--success);
+  border-color: rgba(var(--success-rgb), 0.3);
+  background: rgba(var(--success-rgb), 0.08);
+}
+
+.pricing-section .plans-coupon__icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.pricing-section .plans-coupon__intro-text {
+  min-width: 0;
+}
+
+.pricing-section .plans-coupon__eyebrow {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--gold);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+}
+
+.pricing-section .plans-coupon.is-active .plans-coupon__eyebrow {
+  color: var(--success);
+}
+
+.pricing-section .plans-coupon__title {
+  display: block;
+  color: var(--text-primary);
+  font-size: 0.96rem;
+  line-height: 1.3;
+}
+
+.pricing-section .plans-coupon__form {
+  min-width: 0;
+}
+
+.pricing-section .plans-coupon__controls {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 11px;
+  background: rgba(0, 0, 0, 0.35);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.pricing-section .plans-coupon__controls:focus-within {
+  border-color: rgba(var(--gold-rgb), 0.65);
+  box-shadow: 0 0 0 4px rgba(var(--gold-rgb), 0.08);
+}
+
+.pricing-section .plans-coupon__input {
+  width: 100%;
+  min-width: 0;
+  height: 46px;
+  padding: 0 15px;
+  color: var(--text-primary);
+  outline: none;
+  border: 0;
+  border-radius: 10px 0 0 10px;
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+.pricing-section .plans-coupon__input::placeholder {
+  color: rgba(247, 244, 238, 0.3);
+}
+
+.pricing-section .plans-coupon__button {
+  min-width: 104px;
+  height: 46px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #080609;
+  border: 0;
+  border-radius: 0 10px 10px 0;
+  background: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 180ms ease, opacity 180ms ease;
+}
+
+.pricing-section .plans-coupon__button:hover {
+  background: var(--gold-hot);
+}
+
+.pricing-section .plans-coupon__button:disabled {
+  color: rgba(247, 244, 238, 0.38);
+  background: rgba(255, 255, 255, 0.08);
+  cursor: not-allowed;
+}
+
+.pricing-section .plans-coupon__button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.pricing-section .plans-coupon__status {
+  min-height: 17px;
+  margin-top: 7px;
+  display: block;
+  color: rgba(247, 244, 238, 0.44);
+  font-size: 0.65rem;
+  line-height: 1.35;
+}
+
+.pricing-section .plans-coupon__status.is-success {
+  color: var(--success);
+}
+
+.pricing-section .plans-coupon__status.is-error {
+  color: #fb7185;
+}
+
+.pricing-section .plans-coupon__status.is-affiliate {
+  margin-top: 12px;
+  padding: 8px 12px;
+  color: #090608;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 8px;
+  background: var(--gold);
+  box-shadow: 0 4px 12px rgba(var(--gold-rgb), 0.25);
+  animation: affiliate-glow 1.5s ease-out infinite alternate;
+}
+
+@keyframes affiliate-glow {
+  from {
+    box-shadow: 0 4px 12px rgba(var(--gold-rgb), 0.25);
+  }
+  to {
+    box-shadow: 0 4px 20px rgba(var(--gold-rgb), 0.5);
+  }
+}
+
+.pricing-section .plans-grid {
+  position: relative;
+  z-index: 2;
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 22px;
+}
+
+.pricing-section .plans-card {
+  position: relative;
+  min-width: 0;
+  padding: clamp(24px, 3vw, 34px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(var(--royal-rgb), 0.09), transparent 34%),
+    linear-gradient(145deg, rgba(19, 17, 23, 0.99), rgba(7, 6, 9, 0.99));
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.38),
+    inset 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.pricing-section .plans-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--royal-hot-rgb), 0.65),
+    transparent
+  );
+}
+
+.pricing-section .plans-card--annual {
+  border-color: rgba(var(--gold-rgb), 0.48);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(var(--gold-rgb), 0.13), transparent 36%),
+    linear-gradient(145deg, rgba(24, 20, 13, 0.99), rgba(8, 7, 9, 0.99));
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, 0.44),
+    0 0 35px rgba(var(--gold-rgb), 0.08);
+}
+
+.pricing-section .plans-card--annual::before {
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.pricing-section .plans-card__meta {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pricing-section .plans-card__cycle {
+  color: rgba(247, 244, 238, 0.45);
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.pricing-section .plans-card__badge {
+  min-height: 28px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--royal-hot);
+  border: 1px solid rgba(var(--royal-hot-rgb), 0.24);
+  border-radius: 999px;
+  background: rgba(var(--royal-rgb), 0.08);
+  font-size: 0.54rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.pricing-section .plans-card--annual .plans-card__badge {
+  color: #090608;
+  border-color: var(--gold);
+  background: var(--gold);
+}
+
+.pricing-section .plans-card__badge svg {
+  width: 12px;
+  height: 12px;
+}
+
+.pricing-section .plans-card__header {
+  margin-top: 20px;
+}
+
+.pricing-section .plans-card__title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(2rem, 3vw, 2.55rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.pricing-section .plans-card--annual .plans-card__title {
+  color: var(--gold-hot);
+}
+
+.pricing-section .plans-card__description {
+  min-height: 44px;
+  max-width: 42ch;
+  margin-top: 9px;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.pricing-section .plans-card__price-box {
+  min-width: 0;
+  min-height: 190px;
+  margin-top: 22px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.pricing-section .plans-card--annual .plans-card__price-box {
+  border-color: rgba(var(--gold-rgb), 0.16);
+  background: rgba(var(--gold-rgb), 0.045);
+}
+
+.pricing-section .plans-card__previous {
+  min-height: 22px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(247, 244, 238, 0.42);
+  font-size: 0.69rem;
+}
+
+.pricing-section .plans-card__price-label {
+  color: rgba(247, 244, 238, 0.4);
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.pricing-section .plans-card__coupon-badge {
+  padding: 3px 6px;
+  color: var(--success);
+  border: 1px solid rgba(var(--success-rgb), 0.28);
+  border-radius: 5px;
+  background: rgba(var(--success-rgb), 0.08);
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.pricing-section .plans-card__price-line {
+  min-width: 0;
+  min-height: 72px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.pricing-section .plans-card__installments {
+  color: var(--gold);
+  font-size: 1rem;
+  font-weight: 850;
+}
+
+.pricing-section .plans-card__currency {
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.pricing-section .plans-card__value {
+  min-width: 0;
+  display: inline-flex;
+  align-items: baseline;
+  color: #F7F4EE;
+  font-family: "Clash Display", sans-serif;
+  font-size: clamp(3.7rem, 5.5vw, 5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.065em;
+}
+
+.pricing-section .plans-card--annual .plans-card__value {
+  color: #F7F4EE;
+  font-size: clamp(3.5rem, 5vw, 4.65rem);
+}
+
+.pricing-section .plans-price-roll {
+  height: 1.1em;
+  display: inline-block;
+  overflow: hidden;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  vertical-align: bottom;
+  padding: 0.08em;
+  margin: -0.08em;
+}
+
+.pricing-section .plans-price-roll__value {
+  display: block;
+  line-height: 1;
+}
+
+.pricing-section .plans-card.is-discounted .plans-price-roll {
+  animation: plans-price-glow 750ms ease-out;
+}
+
+@keyframes plans-price-glow {
+  0% {
+    filter: brightness(1.55) drop-shadow(0 0 14px rgba(var(--success-rgb), 0.42));
+  }
+
+  100% {
+    filter: brightness(1) drop-shadow(0 0 0 rgba(var(--success-rgb), 0));
+  }
+}
+
+.pricing-section .plans-card__period {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.pricing-section .plans-card__price-note {
+  min-height: 34px;
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.pricing-section .plans-card__price-note strong {
+  color: var(--text-primary);
+  font-weight: 750;
+}
+
+.pricing-section .plans-card__facts {
+  min-height: 64px;
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.pricing-section .plans-card__fact {
+  min-width: 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(247, 244, 238, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.66rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.pricing-section .plans-card__fact--stacked {
+  align-items: flex-start;
+  flex-direction: column;
+  text-align: left;
+}
+
+.pricing-section .plans-card__fact strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--gold-hot);
+  font-size: 0.8rem;
+}
+
+.pricing-section .plans-card__cta {
+  width: 100%;
+  min-height: 56px;
+  margin-top: 20px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: var(--text-primary);
+  border: 1px solid rgba(var(--royal-hot-rgb), 0.3);
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--royal-rgb), 0.22),
+    rgba(var(--royal-deep-rgb), 0.2)
+  );
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.pricing-section .plans-card__cta:hover {
+  transform: translateY(-1px);
+  border-color: rgba(var(--royal-hot-rgb), 0.52);
+  box-shadow: 0 14px 28px -20px rgba(var(--royal-rgb), 0.9);
+}
+
+.pricing-section .plans-card--annual .plans-card__cta {
+  color: #080609;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--gold-hot), var(--gold));
+  box-shadow: 0 14px 30px -19px rgba(var(--gold-rgb), 0.95);
+}
+
+.pricing-section .plans-card--annual .plans-card__cta:hover {
+  border-color: transparent;
+  box-shadow: 0 17px 34px -18px rgba(var(--gold-rgb), 0.95);
+}
+
+.pricing-section .plans-card__cta svg {
+  width: 16px;
+  height: 16px;
+}
+
+.pricing-section .plans-card__secure {
+  margin-top: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: rgba(247, 244, 238, 0.4);
+  font-size: 0.62rem;
+}
+
+.pricing-section .plans-card__secure svg {
+  width: 12px;
+  height: 12px;
+}
+
+.pricing-section .plans-card__features {
+  flex: 1;
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.pricing-section .plans-card__features-title {
+  display: block;
+  color: var(--royal-hot);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.pricing-section .plans-card--annual .plans-card__features-title {
+  color: var(--gold);
+}
+
+.pricing-section .plans-card__features-copy {
+  margin-top: 6px;
+  color: var(--text-primary);
+  font-size: 0.76rem;
+}
+
+.pricing-section .plans-card__features-list {
+  margin: 17px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px 16px;
+  list-style: none;
+}
+
+.pricing-section .plans-card__features-list li {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.73rem;
+  line-height: 1.4;
+}
+
+.pricing-section .plans-card__features-list svg {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
+  margin-top: 1px;
+  color: var(--royal-hot);
+}
+
+.pricing-section .plans-card--annual .plans-card__features-list svg {
+  color: var(--gold);
+}
+
+@media (max-width: 900px) {
+  .pricing-section .plans-coupon,
+  .pricing-section .plans-grid {
+    max-width: 620px;
+  }
+
+  .pricing-section .plans-coupon__content {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .pricing-section .plans-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-section .plans-card--annual {
+    order: -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .pricing-section .plans-heading {
+    margin-bottom: 28px;
+  }
+
+  .pricing-section .plans-coupon__content {
+    padding: 15px;
+  }
+
+  .pricing-section .plans-coupon__icon {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
+
+  .pricing-section .plans-coupon__title {
+    font-size: 0.84rem;
+  }
+
+  .pricing-section .plans-coupon__button {
+    min-width: 90px;
+    padding-inline: 11px;
+  }
+
+  .pricing-section .plans-card {
+    padding: 22px;
+    border-radius: 20px;
+  }
+
+  .pricing-section .plans-card__meta {
+    min-height: 0;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pricing-section .plans-card__description {
+    min-height: 0;
+  }
+
+  .pricing-section .plans-card__price-box {
+    min-height: 0;
+    padding: 18px;
+  }
+
+  .pricing-section .plans-card__price-line {
+    min-height: 64px;
+  }
+
+  .pricing-section .plans-card__price-note {
+    min-height: 0;
+  }
+
+  .pricing-section .plans-card__value,
+  .pricing-section .plans-card--annual .plans-card__value {
+    font-size: clamp(3rem, 15vw, 4rem);
+  }
+
+  .pricing-section .plans-card__features-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 380px) {
+  .pricing-section .plans-card {
+    padding: 18px;
+  }
+
+  .pricing-section .plans-card__price-box {
+    padding: 16px;
+  }
+
+  .pricing-section .plans-card__price-line {
+    gap: 4px;
+  }
+
+  .pricing-section .plans-card__installments {
+    font-size: 0.82rem;
+  }
+
+  .pricing-section .plans-card__currency {
+    font-size: 0.82rem;
+  }
+
+  .pricing-section .plans-card__value,
+  .pricing-section .plans-card--annual .plans-card__value {
+    font-size: 2.85rem;
+  }
+
+  .pricing-section .plans-card__facts {
+    grid-template-columns: 1fr;
+  }
+}

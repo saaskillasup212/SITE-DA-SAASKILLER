@@ -1,0 +1,192 @@
+PATCH PEQUENO — CORREÇÃO DO SCROLL NA SEÇÃO RUAN + MATHIAS
+
+Corrija exclusivamente a seção `Quem está por trás`.
+
+Não alterar:
+
+* Design.
+* Copy.
+* Cores.
+* Fotos.
+* Players.
+* Efeitos 3D.
+* Outras seções.
+* Header.
+* Planos ou checkout.
+
+O visual já está aprovado. Corrigir somente altura, sticky, timing e visibilidade.
+
+## CAUSA PROVÁVEL
+
+A animação termina e coloca os perfis em `opacity: 0` antes de o container alto da narrativa terminar. O usuário continua rolando dentro da seção, mas todo o conteúdo já desapareceu, produzindo uma grande área vazia.
+
+Também existem janelas de exibição curtas demais para Ruan e Mathias.
+
+## 1. ALTURA DA SEÇÃO
+
+Inspecionar e remover combinações excessivas de:
+
+* `min-height`.
+* `height` em `vh`.
+* Padding vertical.
+* Espaçadores.
+* Duração do ScrollTrigger.
+
+No desktop, limitar o wrapper cinematográfico a aproximadamente:
+
+`220svh` até `240svh`
+
+Não manter alturas como `400vh`, `500vh` ou superiores.
+
+O próximo bloco deve começar no máximo entre 80px e 120px depois do fim visual da narrativa.
+
+## 2. STICKY
+
+Configurar o palco:
+
+```css
+.team-story-stage {
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100svh - var(--header-height));
+  display: flex;
+  align-items: center;
+}
+```
+
+Regras:
+
+* Considerar a altura real do header.
+* Não deixar o conteúdo escondido atrás da navbar.
+* Não usar `overflow: hidden/auto` em ancestrais do sticky.
+* Aplicar `overflow: clip` somente no container visual interno.
+* Canvas não pode alterar a altura do documento.
+
+## 3. TIMELINE
+
+Usar o progresso da própria seção:
+
+`start: "start start"`
+`end: "end end"`
+
+Distribuir a timeline:
+
+### Ruan
+
+* Entrada: `0.00 → 0.08`
+* Visível integralmente: `0.08 → 0.42`
+* Saída: `0.42 → 0.50`
+
+### Mathias
+
+* Entrada: `0.42 → 0.50`
+* Visível integralmente: `0.50 → 0.84`
+* Saída/convergência: `0.84 → 0.92`
+
+### Encerramento
+
+* Convergência visível: `0.84 → 1.00`
+* Não deixar todos os elementos invisíveis antes de `1.00`.
+
+Em qualquer ponto da timeline deve existir pelo menos uma cena visível.
+
+Não criar intervalo vazio entre Ruan e Mathias.
+
+## 4. TEMPO DE LEITURA
+
+Cada perfil deve permanecer completamente visível por tempo suficiente para:
+
+* Ler o nome.
+* Ler a história.
+* Ver a foto.
+* Identificar o vídeo.
+* Clicar no player.
+
+Não animar continuamente durante o período de leitura.
+
+Durante a janela principal:
+
+* `opacity: 1`
+* `visibility: visible`
+* `pointer-events: auto`
+* Transformações praticamente paradas.
+
+## 5. PLAYERS
+
+Os dois players precisam permanecer visíveis durante toda a janela do respectivo perfil.
+
+Não desmontar o componente quando ele sair alguns pixels da IntersectionObserver.
+
+Não controlar a existência do player com uma faixa estreita de progresso.
+
+Regras:
+
+* Ruan visível junto com o perfil de Ruan.
+* Mathias visível junto com o perfil de Mathias.
+* Placeholder continua visível quando `videoUrl` estiver vazio.
+* Canvas deve usar `pointer-events: none`.
+* Área DOM do player deve ficar acima do canvas.
+* `z-index` do player maior que o fundo 3D.
+
+Ao clicar no player, abrir o vídeo em modal fixo e acessível, evitando que o scroll da narrativa faça o vídeo desaparecer durante a reprodução.
+
+## 6. ESPAÇO VAZIO
+
+Remover:
+
+* Spacer residual após a convergência.
+* Margens negativas compensatórias.
+* Padding inferior excessivo.
+* Div vazia usada apenas para prolongar scroll.
+* Segunda altura aplicada dentro do wrapper.
+
+Após a convergência, a próxima seção `Feita para quem precisa construir e vender` deve entrar naturalmente.
+
+## 7. TABLET E MOBILE
+
+Abaixo de `1024px`:
+
+* Desativar sticky prolongado.
+* Desativar timeline cinematográfica dependente de scroll.
+* Renderizar Ruan e Mathias em fluxo normal.
+* Um perfil abaixo do outro.
+* Foto, história e player sempre visíveis.
+* Usar apenas fade curto ao entrar na viewport.
+
+Não deixar altura de desktop ativa no mobile.
+
+## 8. REDUCED MOTION
+
+Com `prefers-reduced-motion`:
+
+* Desativar sticky.
+* Desativar crossfade por progresso.
+* Mostrar os dois perfis no fluxo normal.
+* Manter players funcionais.
+* Não reservar espaço cinematográfico.
+
+## 9. TESTES
+
+Verificar manualmente:
+
+* 1366×768.
+* 1440×900.
+* 1920×1080.
+* Tablet.
+* Mobile.
+
+Confirmar:
+
+1. Ruan permanece visível para leitura.
+2. Player de Ruan aparece corretamente.
+3. Mathias entra sem janela vazia.
+4. Player de Mathias aparece corretamente.
+5. Nenhuma cena some cedo.
+6. Não existe grande área preta vazia.
+7. Próxima seção começa logo após o encerramento.
+8. Players recebem clique.
+9. Header não cobre o conteúdo.
+10. Efeitos 3D continuam iguais.
+11. Type-check, lint e build passam.
+
+Não redesenhar a seção. Apenas corrigir sua mecânica de scroll e layout.

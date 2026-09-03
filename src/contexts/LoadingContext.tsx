@@ -7,6 +7,8 @@ interface LoadingContextType {
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
+// The hook intentionally lives beside its provider to keep the loading boundary cohesive.
+// eslint-disable-next-line react-refresh/only-export-components
 export const useLoading = () => {
   const context = useContext(LoadingContext);
   if (!context) {

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import footerLogoGold from "@/assets/footer-logo-gold.png";
 import Footer from "@/components/Footer";
+import LightningMark from "@/components/LightningMark";
 
 const PoliticaPrivacidade = () => {
   return (
@@ -11,11 +11,7 @@ const PoliticaPrivacidade = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3 group">
-              <img 
-                src={footerLogoGold} 
-                alt="SaaSKiller Logo" 
-                className="w-8 h-8 object-contain"
-              />
+              <LightningMark className="w-8 h-8" title="SaaSKiller" />
               <span className="text-white text-lg font-medium">SaaSKiller</span>
             </Link>
             <Link 

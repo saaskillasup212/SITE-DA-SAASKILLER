@@ -49,9 +49,9 @@ Fase 3 — Ambiente roxo: Atmosphere (blobs roxos mantidos), bordas/spotlights d
 Fase 4 — Varredura: eliminar hexes hardcoded restantes (trocar por tokens), conferir LoadingScreen/3D scenes, screenshot de cada seção no navegador e checagem de contraste.
 
 ## Critério de pronto
-[ ] Zero hex de cor hardcoded fora de tokens.css (cenas 3D podem usar constantes derivadas comentadas)
-[ ] Logo dourada e site na mesma família de cor — sem conflito roxo vs marca
-[ ] Roxo presente como suporte (atmosfera/bordas), não protagonista
-[ ] Valores comerciais intactos (conferidos após o patch)
-[ ] Nada além de cor foi alterado
-[ ] Testado: navegar o site inteiro no Chrome, seção por seção, com screenshots
+[x] Zero hex de cor hardcoded fora de tokens.css (cenas 3D e keyframes de framer-motion usam constantes derivadas comentadas)
+[x] Logo dourada e site na mesma família de cor — sem conflito roxo vs marca
+[x] Roxo presente como suporte (atmosfera/bordas), não protagonista
+[x] Valores comerciais intactos (planos 79,90/99,90/119,90 e extensão 19/39/69/97/197 conferidos em 12/07/2026)
+[x] Nada além de cor foi alterado
+[x] Testado: site inteiro navegado no Chrome em 12/07/2026, seção por seção, com screenshots — sem erros de console

@@ -6,33 +6,34 @@
    ============================================ */
 
 :root {
-  /* Fundos — preto quente */
-  --bg-void: #0a0806;        /* fundo base */
-  --bg-surface: #12100c;     /* cards */
-  --bg-elevated: #1a1712;    /* superfícies elevadas */
+  /* Fundos — direção A Corrente da Operação */
+  --bg-void: #050407;
+  --bg-surface: #111016;
+  --bg-elevated: #0B0810;
 
   /* Dourado — protagonista (CTAs, raio, preços, energia) */
-  --gold: #E6B54A;
-  --gold-hot: #F5D076;       /* glow / hover */
-  --gold-deep: #8a6a1f;      /* gradientes profundos */
+  --gold: #F2B93B;
+  --gold-hot: #FFD874;
+  --gold-deep: #8A6219;
 
   /* Roxo — suporte (atmosfera, bordas, profundidade) */
-  --royal: #8b7cf7;
-  --royal-hot: #a78bfa;
-  --royal-deep: #4c3fd4;
+  --royal: #8B5CF6;
+  --royal-hot: #B79AFF;
+  --royal-deep: #35126B;
 
   /* Textos — branco quente */
-  --text-primary: #faf8f2;
-  --text-muted: #a89f8f;
+  --text-primary: #F7F4EE;
+  --text-muted: #9B96A3;
   --success: #34d399;
 
   /* Variantes RGB para uso em rgba() */
-  --gold-rgb: 230, 181, 74;
-  --gold-hot-rgb: 245, 208, 118;
-  --gold-deep-rgb: 138, 106, 31;
-  --royal-rgb: 139, 124, 247;
-  --royal-hot-rgb: 167, 139, 250;
-  --royal-deep-rgb: 76, 63, 212;
+  --gold-rgb: 242, 185, 59;
+  --gold-hot-rgb: 255, 216, 116;
+  --gold-deep-rgb: 138, 98, 25;
+  --royal-rgb: 139, 92, 246;
+  --royal-hot-rgb: 183, 154, 255;
+  --royal-deep-rgb: 53, 18, 107;
+  --success-rgb: 52, 211, 153;
 
   /* ------------------------------------------
      Aliases de compatibilidade (migração):

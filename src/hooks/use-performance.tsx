@@ -1,39 +1,60 @@
 import { useState, useEffect } from "react";
 
+/**
+ * Os valores são resolvidos JÁ NO PRIMEIRO RENDER (inicializador do useState).
+ * Se começarem em `false` e só virarem `true` num useEffect, componentes que
+ * escolhem variantes de animação por `shouldReduceMotion` trocam o objeto de
+ * variantes no meio da animação — o framer-motion para de controlar as
+ * propriedades que sumiram (filter/transform) e os estilos inline congelam no
+ * estado inicial. Era o que deixava o H1 do Hero borrado para sempre no mobile.
+ */
+
+const MOBILE_BREAKPOINT = 768;
+
+const readIsMobile = () =>
+  typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT;
+
+const readReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+interface NavigatorWithConnection extends Navigator {
+  connection?: { effectiveType?: string };
+  mozConnection?: { effectiveType?: string };
+  webkitConnection?: { effectiveType?: string };
+}
+
+const readSlowConnection = () => {
+  if (typeof navigator === "undefined") return false;
+  const connectedNavigator = navigator as NavigatorWithConnection;
+  const connection =
+    connectedNavigator.connection ||
+    connectedNavigator.mozConnection ||
+    connectedNavigator.webkitConnection;
+  if (!connection) return false;
+  return ["slow-2g", "2g", "3g"].includes(connection.effectiveType);
+};
+
 export const usePerformance = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isSlowConnection, setIsSlowConnection] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(readIsMobile);
+  const [isSlowConnection, setIsSlowConnection] = useState(readSlowConnection);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(readReducedMotion);
 
   useEffect(() => {
-    // Detect mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    // Detect slow connection
-    const checkConnection = () => {
-      const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
-      if (connection) {
-        const slowTypes = ['slow-2g', '2g', '3g'];
-        setIsSlowConnection(slowTypes.includes(connection.effectiveType));
-      }
-    };
-
-    // Detect prefers-reduced-motion
-    const checkReducedMotion = () => {
-      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      setPrefersReducedMotion(mediaQuery.matches);
-    };
+    const checkMobile = () => setIsMobile(readIsMobile());
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const checkReducedMotion = () => setPrefersReducedMotion(motionQuery.matches);
 
     checkMobile();
-    checkConnection();
+    setIsSlowConnection(readSlowConnection());
     checkReducedMotion();
 
-    window.addEventListener('resize', checkMobile);
-    
+    window.addEventListener("resize", checkMobile);
+    motionQuery.addEventListener("change", checkReducedMotion);
+
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("resize", checkMobile);
+      motionQuery.removeEventListener("change", checkReducedMotion);
     };
   }, []);
 

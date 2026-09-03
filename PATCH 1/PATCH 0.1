@@ -1,0 +1,203 @@
+PATCH SITE 1.0 — OFERTA UNIFICADA SAASKILLER
+
+OBJETIVO
+
+Substituir os três planos públicos Essencial, Pro e Supreme por uma única oferta completa com dois ciclos de pagamento:
+
+* Mensal: R$115
+* Anual: R$397
+
+Este patch altera somente o site público e o fluxo de seleção. Não deve alterar banco, Supabase, webhooks, assinaturas ou integração Applyfy.
+
+DIREÇÃO DA OFERTA
+
+Remover da página pública:
+
+* Cards Essencial, Pro e Supreme;
+* Funcionalidades riscadas;
+* Comparação baseada em recursos bloqueados;
+* Preços antigos;
+* Textos que posicionem a SaaSKiller apenas como gerador de prompts.
+
+Criar uma única oferta centralizada:
+
+Nome:
+
+SaaSKiller Completo
+
+Eyebrow:
+
+UM PLANO. A OPERAÇÃO INTEIRA.
+
+Headline:
+
+Da ideia ao primeiro cliente. Sem montar uma equipe.
+
+Subheadline:
+
+Planeje, construa, organize e venda Apps e Websites usando IA em uma única plataforma.
+
+SELETOR DE CICLO
+
+Criar um toggle acessível:
+
+* Mensal
+* Anual
+
+O anual deve vir selecionado por padrão.
+
+MENSAL
+
+Preço:
+
+R$115/mês
+
+Texto auxiliar:
+
+Flexibilidade para começar. Cancele quando quiser.
+
+CTA:
+
+Começar agora
+
+ANUAL
+
+Preço principal:
+
+R$397/ano
+
+Informações:
+
+* Equivale a R$33,08/mês
+* Economize R$983 por ano
+* Menos de R$1,09 por dia
+* Aproximadamente 71% de economia
+
+Badge:
+
+MELHOR ESCOLHA
+
+CTA:
+
+Garantir 12 meses por R$397
+
+COPY DO CARD
+
+Título:
+
+Tudo que você precisa para criar e vender.
+
+Descrição:
+
+Tenha uma operação completa para transformar ideias em produtos, organizar seus projetos e encontrar clientes.
+
+Benefícios:
+
+* PRDs e blueprints completos
+* Criação de Apps e Websites
+* Prompts especializados para Lovable, Bolt, Cursor, Replit e outras ferramentas
+* Projetos salvos e versionados
+* Gestão de clientes e entregas
+* Templates prontos para diferentes nichos
+* Prospecção de potenciais clientes
+* Propostas e materiais comerciais
+* Estratégias e aulas práticas
+
+Rodapé do card:
+
+Acesso completo. Nenhuma funcionalidade bloqueada.
+
+Não prometer IA ilimitada, créditos ilimitados ou recursos que não estejam realmente incluídos.
+
+A extensão deve continuar como add-on separado e não pode ser incluída silenciosamente no plano.
+
+FLUXO DOS BOTÕES
+
+Não mandar visitantes anônimos diretamente para o checkout da Applyfy.
+
+Os CTAs devem levar ao cadastro/login do sistema preservando a seleção:
+
+Mensal:
+
+{APP_URL}/cadastro?plan=complete&cycle=monthly
+
+Anual:
+
+{APP_URL}/cadastro?plan=complete&cycle=annual
+
+Reutilizar a variável pública existente que aponta para o sistema.
+
+Se não existir, criar uma configuração pública claramente nomeada, sem segredos. Não duplicar URLs em vários componentes.
+
+Preservar apenas parâmetros permitidos de atribuição:
+
+* utm_source
+* utm_medium
+* utm_campaign
+* utm_content
+* ref
+
+Não enviar CPF, email, token ou qualquer dado pessoal pela URL.
+
+DESIGN
+
+* Preservar a identidade preta, roxa e dourada da SaaSKiller;
+* Um único card premium centralizado;
+* Destaque visual dourado no anual;
+* Toggle com transição suave;
+* Hierarquia clara entre preço, economia e CTA;
+* Sem poluição visual;
+* Responsivo em desktop, tablet e celular;
+* Sem corte de textos ou overflow;
+* Estados hover, focus e active;
+* Contraste e navegação por teclado;
+* Manter consistência com tipografia, botões e espaçamentos existentes.
+
+SEO E ANALYTICS
+
+Atualizar qualquer conteúdo estruturado de preços para representar um produto com duas ofertas:
+
+* monthly: BRL 115
+* annual: BRL 397
+
+Registrar eventos de analytics já utilizados pelo projeto:
+
+* pricing_cycle_selected
+* pricing_cta_clicked
+
+Incluir cycle, plan e origem, sem informações pessoais.
+
+LIMPEZA
+
+Remover imports, estados e estilos que serviam exclusivamente aos três cards antigos, desde que não sejam utilizados em outras páginas.
+
+Não apagar componentes compartilhados sem verificar todos os usos.
+
+VALIDAÇÃO
+
+Executar:
+
+* lint;
+* typecheck;
+* build;
+* testes existentes.
+
+Validar manualmente:
+
+* mensal seleciona R$115;
+* anual seleciona R$397;
+* anual inicia selecionado;
+* cada CTA gera a rota correta;
+* UTMs permitidas são preservadas;
+* mobile funciona sem overflow;
+* não existem preços antigos na página pública.
+
+Ao terminar, apresentar:
+
+* arquivos alterados;
+* componentes removidos;
+* rotas finais dos CTAs;
+* screenshots desktop e mobile;
+* resultado de lint, typecheck e build.
+
+Não publicar automaticamente sem mostrar o diff e o resultado da validação.
