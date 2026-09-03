@@ -203,7 +203,7 @@ const PricingPlans = () => {
   };
 
   const hasAnyCoupon = Boolean(activeCoupon);
-  const isAffiliateCoupon = activeCoupon === "MATHIAS" || activeCoupon === "RUAN" || activeCoupon === "GUILHERME";
+  const isAffiliateCoupon = activeCoupon === "MATHIAS" || activeCoupon === "RUAN" || activeCoupon === "GUILHERME" || activeCoupon === "AYANNA";
   const isDiscounted = hasAnyCoupon && !isAffiliateCoupon;
   
   // Flag visual caso haja afiliado na URL, mas não tenha cupom aplicado
