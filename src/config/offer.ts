@@ -4,7 +4,7 @@ export type BillingCycle = "monthly" | "annual";
 
 export const SAASKILLER_PRICING = {
   monthly: {
-    amountCents: 29400,
+    amountCents: 17200,
     discountedCents: 14700,
     cycle: "monthly",
   },
