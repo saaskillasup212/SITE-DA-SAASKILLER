@@ -286,7 +286,7 @@ const PricingPlans = () => {
                 <input
                   id="plans-coupon-input"
                   className="plans-coupon__input"
-                  value={autoDiscount && !activeCoupon ? "50%OFF COPA26" : couponInput}
+                  value={autoDiscount && !activeCoupon ? "COPA26" : couponInput}
                   onChange={(event) => {
                     setCouponInput(event.target.value.toUpperCase());
                     setCouponError("");
