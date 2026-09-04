@@ -614,10 +614,11 @@ All colors MUST be HSL.
   html {
     background: var(--bg-void);
     scroll-padding-top: 84px;
+    overflow-x: hidden;
   }
 
   body {
-    overflow-x: clip;
+    overflow-x: hidden;
     background:
       radial-gradient(circle at 80% 4%, rgba(var(--royal-deep-rgb), 0.13), transparent 28rem),
       var(--bg-void);
