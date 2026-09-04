@@ -206,9 +206,7 @@ const PricingPlans = () => {
   const isAffiliateCoupon = activeCoupon === "MATHIAS" || activeCoupon === "RUAN" || activeCoupon === "GUILHERME" || activeCoupon === "AYANNA" || activeCoupon === "LEANDRO";
   const isDiscounted = (Boolean(activeCoupon) && !isAffiliateCoupon) || autoDiscount;
   
-  // Flag visual caso haja afiliado na URL, mas não tenha cupom aplicado
-  const isSupportingAffiliate = Boolean(normalizedAffiliate) && !hasAnyCoupon && !autoDiscount;
-
+  // Removido o isSupportingAffiliate a pedido do usuário
   const monthlyAmountCents = getSaaSKillerPriceCents(
     "monthly",
     isDiscounted,
@@ -255,7 +253,7 @@ const PricingPlans = () => {
               </span>
               <div className="plans-coupon__intro-text">
                 <span className="plans-coupon__eyebrow">
-                  {isAffiliateCoupon ? "APOIO A COLABORADOR" : (isSupportingAffiliate ? "VOCÊ FOI INDICADO" : "CONDIÇÃO ESPECIAL")}
+                  {isAffiliateCoupon ? "APOIO A COLABORADOR" : "CONDIÇÃO ESPECIAL"}
                 </span>
                 <strong className="plans-coupon__title">
                   {isAffiliateCoupon
@@ -314,7 +312,7 @@ const PricingPlans = () => {
                     : hasAnyCoupon
                       ? " is-success"
                       : ""
-                }${isAffiliateCoupon || isSupportingAffiliate || autoDiscount ? " is-affiliate" : ""}`}
+                }${isAffiliateCoupon || autoDiscount ? " is-affiliate" : ""}`}
                 role="status"
               >
                 {couponError ||
@@ -324,9 +322,7 @@ const PricingPlans = () => {
                       ? autoDiscount && !activeCoupon 
                         ? "Desconto especial de indicação aplicado!" 
                         : `Cupom ${activeCoupon} aplicado com sucesso.`
-                      : isSupportingAffiliate
-                        ? "Sua compra apoiará o afiliado. Adicione um cupom de desconto se tiver."
-                        : "Digite o código para visualizar os preços especiais.")}
+                      : "Digite o código para visualizar os preços especiais.")}
               </span>
             </form>
           </div>
