@@ -57,6 +57,9 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({
       setAutoDiscount(false);
       sessionStorage.removeItem("autoDiscount");
       localStorage.removeItem("autoDiscount"); // caso tenha ficado preso do código antigo
+      
+      setAffiliateSlug(null);
+      localStorage.removeItem("affiliateSlug");
     }
   }, [location.pathname]);
 
