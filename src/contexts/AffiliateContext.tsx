@@ -22,7 +22,7 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({
     return localStorage.getItem("affiliateSlug") || null;
   });
   const [autoDiscount, setAutoDiscount] = useState<boolean>(() => {
-    return localStorage.getItem("autoDiscount") === "true";
+    return sessionStorage.getItem("autoDiscount") === "true" || localStorage.getItem("autoDiscount") === "true";
   });
   const location = useLocation();
 
@@ -45,9 +45,18 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({
         
         if (hasVip) {
           setAutoDiscount(true);
-          localStorage.setItem("autoDiscount", "true");
+          sessionStorage.setItem("autoDiscount", "true");
+        } else {
+          setAutoDiscount(false);
+          sessionStorage.removeItem("autoDiscount");
+          localStorage.removeItem("autoDiscount");
         }
       }
+    } else if (location.pathname === "/") {
+      // Se acessar a raiz explicitamente sem slug, limpamos o desconto visual (opcional: e o afiliado)
+      setAutoDiscount(false);
+      sessionStorage.removeItem("autoDiscount");
+      localStorage.removeItem("autoDiscount"); // caso tenha ficado preso do código antigo
     }
   }, [location.pathname]);
 
