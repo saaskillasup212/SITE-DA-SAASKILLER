@@ -15,7 +15,7 @@ const AnnouncementBar = () => {
     >
       <Zap className="w-3.5 h-3.5 text-primary" fill="currentColor" />
       <span className="text-xs sm:text-sm font-medium text-primary tracking-wide">
-        Cupom de desconto ativo
+        Cupom COPA26 (50% OFF) ativo. Apenas 5 disponíveis!
       </span>
     </motion.div>
   );
