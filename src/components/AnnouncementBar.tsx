@@ -11,10 +11,11 @@ const AnnouncementBar = () => {
     <motion.div 
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="fixed top-[78px] left-0 w-full z-40 bg-[#0A0A0A]/80 backdrop-blur-md border-b border-white/5 py-2 px-4 flex items-center justify-center gap-2"
+      className="fixed top-[78px] left-0 w-full z-40 bg-primary/10 backdrop-blur-md border-b border-primary/20 py-1.5 px-4 flex items-center justify-center gap-2"
     >
-      <span className="text-xs sm:text-sm font-medium text-white/70 tracking-wide">
-        ✨ Cupom de desconto ativo
+      <Zap className="w-3.5 h-3.5 text-primary" fill="currentColor" />
+      <span className="text-xs sm:text-sm font-medium text-primary tracking-wide">
+        Cupom de desconto ativo
       </span>
     </motion.div>
   );
