@@ -61,12 +61,13 @@ export const buildRegistrationUrl = (
   cycle: BillingCycle,
   coupon?: string,
   affiliate?: string | null,
+  autoDiscount: boolean = false,
   search = typeof window !== "undefined" ? window.location.search : "",
 ) => {
   const sourceParams = new URLSearchParams(search);
   const normalizedCoupon = coupon ? getNormalizedCoupon(coupon).toUpperCase() : undefined;
   const isAffiliateCoupon = normalizedCoupon === "MATHIAS" || normalizedCoupon === "RUAN" || normalizedCoupon === "GUILHERME" || normalizedCoupon === "AYANNA" || normalizedCoupon === "LEANDRO";
-  const priceType = normalizedCoupon && !isAffiliateCoupon ? "discounted" : "regular";
+  const priceType = (normalizedCoupon && !isAffiliateCoupon) || autoDiscount ? "discounted" : "regular";
   const checkoutUrl = new URL(OFFER.checkoutUrls[cycle][priceType]);
 
   if (coupon) {

@@ -5,11 +5,13 @@ import { getNormalizedCoupon, AFFILIATE_CODES, OFFER } from "@/config/offer";
 interface AffiliateContextType {
   affiliateSlug: string | null;
   normalizedAffiliate: string | null;
+  autoDiscount: boolean;
 }
 
 const AffiliateContext = createContext<AffiliateContextType>({
   affiliateSlug: null,
   normalizedAffiliate: null,
+  autoDiscount: false,
 });
 
 export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -19,17 +21,32 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({
     // try reading from localStorage initially
     return localStorage.getItem("affiliateSlug") || null;
   });
+  const [autoDiscount, setAutoDiscount] = useState<boolean>(() => {
+    return localStorage.getItem("autoDiscount") === "true";
+  });
   const location = useLocation();
 
   useEffect(() => {
     // Tenta extrair o afiliado da rota atual, assumindo que as rotas de afiliado são no formato /:afiliado ou /:afiliado/planos
     const pathParts = location.pathname.split("/").filter(Boolean);
     if (pathParts.length > 0) {
-      const possibleAffiliate = pathParts[0].toLowerCase();
+      let possibleAffiliate = pathParts[0].toLowerCase();
+      let hasVip = false;
+
+      if (possibleAffiliate.endsWith("-vip")) {
+        hasVip = true;
+        possibleAffiliate = possibleAffiliate.replace("-vip", "");
+      }
+
       // Verifica se é um afiliado válido usando a lista de validCoupons
       if (OFFER.validCoupons.includes(possibleAffiliate as any)) {
         setAffiliateSlug(possibleAffiliate);
         localStorage.setItem("affiliateSlug", possibleAffiliate);
+        
+        if (hasVip) {
+          setAutoDiscount(true);
+          localStorage.setItem("autoDiscount", "true");
+        }
       }
     }
   }, [location.pathname]);
@@ -39,7 +56,7 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({
     : null;
 
   return (
-    <AffiliateContext.Provider value={{ affiliateSlug, normalizedAffiliate }}>
+    <AffiliateContext.Provider value={{ affiliateSlug, normalizedAffiliate, autoDiscount }}>
       {children}
     </AffiliateContext.Provider>
   );

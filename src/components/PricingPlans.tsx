@@ -127,7 +127,7 @@ const PricingPlans = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const viewedRef = useRef(false);
   const { shouldReduceMotion } = usePerformance();
-  const { normalizedAffiliate } = useAffiliate();
+  const { normalizedAffiliate, autoDiscount } = useAffiliate();
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState("");
   const [couponError, setCouponError] = useState("");
@@ -189,7 +189,7 @@ const PricingPlans = () => {
     const priceType = activeCoupon && !isAffiliateOnlyCoupon ? "discounted" : "regular";
     const target = isRuanAffiliate
       ? RUAN_CHECKOUT_URLS[cycle][priceType]
-      : buildRegistrationUrl(cycle, activeCoupon || undefined, normalizedAffiliate);
+      : buildRegistrationUrl(cycle, activeCoupon || undefined, normalizedAffiliate, autoDiscount);
     const eventParameters = {
       plan: OFFER.plan,
       cycle,
@@ -202,12 +202,12 @@ const PricingPlans = () => {
     window.location.assign(target);
   };
 
-  const hasAnyCoupon = Boolean(activeCoupon);
+  const hasAnyCoupon = Boolean(activeCoupon) || autoDiscount;
   const isAffiliateCoupon = activeCoupon === "MATHIAS" || activeCoupon === "RUAN" || activeCoupon === "GUILHERME" || activeCoupon === "AYANNA" || activeCoupon === "LEANDRO";
-  const isDiscounted = hasAnyCoupon && !isAffiliateCoupon;
+  const isDiscounted = (Boolean(activeCoupon) && !isAffiliateCoupon) || autoDiscount;
   
   // Flag visual caso haja afiliado na URL, mas não tenha cupom aplicado
-  const isSupportingAffiliate = Boolean(normalizedAffiliate) && !hasAnyCoupon;
+  const isSupportingAffiliate = Boolean(normalizedAffiliate) && !hasAnyCoupon && !autoDiscount;
 
   const monthlyAmountCents = getSaaSKillerPriceCents(
     "monthly",
@@ -271,7 +271,8 @@ const PricingPlans = () => {
               className="plans-coupon__form"
               onSubmit={(event) => {
                 event.preventDefault();
-                if (hasAnyCoupon) {
+                if (autoDiscount && !activeCoupon) return; // Prevent removing autoDiscount via form
+                if (Boolean(activeCoupon)) {
                   removeCoupon();
                 } else {
                   applyCoupon();
@@ -285,7 +286,7 @@ const PricingPlans = () => {
                 <input
                   id="plans-coupon-input"
                   className="plans-coupon__input"
-                  value={couponInput}
+                  value={autoDiscount && !activeCoupon ? "DESCONTO VIP" : couponInput}
                   onChange={(event) => {
                     setCouponInput(event.target.value.toUpperCase());
                     setCouponError("");
@@ -299,10 +300,10 @@ const PricingPlans = () => {
                 <button
                   type="submit"
                   className="plans-coupon__button"
-                  disabled={!hasAnyCoupon && !couponInput.trim()}
+                  disabled={(!hasAnyCoupon && !couponInput.trim()) || (autoDiscount && !activeCoupon)}
                 >
                   {hasAnyCoupon ? <X aria-hidden /> : <Check aria-hidden />}
-                  {hasAnyCoupon ? "Remover" : "Aplicar"}
+                  {Boolean(activeCoupon) ? "Remover" : autoDiscount ? "Ativo" : "Aplicar"}
                 </button>
               </div>
               <span
@@ -313,14 +314,16 @@ const PricingPlans = () => {
                     : hasAnyCoupon
                       ? " is-success"
                       : ""
-                }${isAffiliateCoupon || isSupportingAffiliate ? " is-affiliate" : ""}`}
+                }${isAffiliateCoupon || isSupportingAffiliate || autoDiscount ? " is-affiliate" : ""}`}
                 role="status"
               >
                 {couponError ||
                   (isAffiliateCoupon
                     ? "Cupom efetuado! Esse colaborador receberá 50% do valor da sua venda."
                     : isDiscounted
-                      ? `Cupom ${activeCoupon} aplicado com sucesso.`
+                      ? autoDiscount && !activeCoupon 
+                        ? "Desconto especial de indicação aplicado!" 
+                        : `Cupom ${activeCoupon} aplicado com sucesso.`
                       : isSupportingAffiliate
                         ? "Sua compra apoiará o afiliado. Adicione um cupom de desconto se tiver."
                         : "Digite o código para visualizar os preços especiais.")}

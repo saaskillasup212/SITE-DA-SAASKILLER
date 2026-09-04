@@ -12,6 +12,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import SmoothScroll from "./components/SmoothScroll";
 import WhatsAppButton from "./components/WhatsAppButton";
 import { AffiliateProvider } from "./contexts/AffiliateContext";
+import AnnouncementBar from "./components/AnnouncementBar";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const AppContent = () => {
         <Sonner />
         <BrowserRouter>
           <AffiliateProvider>
+            <AnnouncementBar />
             <Suspense fallback={null}>
               <Routes>
                 <Route path="/" element={<Index />} />
