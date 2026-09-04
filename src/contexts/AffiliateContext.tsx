@@ -51,16 +51,18 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({
           sessionStorage.removeItem("autoDiscount");
           localStorage.removeItem("autoDiscount");
         }
+        return; // Sai do useEffect prematuramente para não cair na lógica de limpeza abaixo
       }
-    } else if (location.pathname === "/") {
-      // Se acessar a raiz explicitamente sem slug, limpamos o desconto visual (opcional: e o afiliado)
-      setAutoDiscount(false);
-      sessionStorage.removeItem("autoDiscount");
-      localStorage.removeItem("autoDiscount"); // caso tenha ficado preso do código antigo
-      
-      setAffiliateSlug(null);
-      localStorage.removeItem("affiliateSlug");
     }
+    
+    // Se a execução chegou aqui, significa que a URL atual NÃO contém um slug de afiliado válido
+    // (Pode ser a raiz "/", "/planos", "/termos-de-uso", etc.)
+    // Vamos garantir a limpeza total para não haver "vazamento" de afiliados
+    setAffiliateSlug(null);
+    localStorage.removeItem("affiliateSlug");
+    setAutoDiscount(false);
+    sessionStorage.removeItem("autoDiscount");
+    localStorage.removeItem("autoDiscount");
   }, [location.pathname]);
 
   const normalizedAffiliate = affiliateSlug
