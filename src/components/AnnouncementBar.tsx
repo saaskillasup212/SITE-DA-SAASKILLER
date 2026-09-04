@@ -9,15 +9,13 @@ const AnnouncementBar = () => {
 
   return (
     <motion.div 
-      initial={{ height: 0, opacity: 0 }}
-      animate={{ height: "auto", opacity: 1 }}
-      className="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 w-full z-50 text-center py-2.5 px-4 flex items-center justify-center gap-2 overflow-hidden shadow-[0_4px_15px_rgba(249,115,22,0.2)] border-b border-orange-400"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="fixed top-[78px] left-0 w-full z-40 bg-[#0A0A0A]/80 backdrop-blur-md border-b border-white/5 py-2 px-4 flex items-center justify-center gap-2"
     >
-      <Zap className="w-5 h-5 text-white animate-pulse" fill="currentColor" />
-      <span className="text-sm sm:text-base font-extrabold text-white tracking-wide uppercase drop-shadow-md">
-        Apenas 5 cupons ativos! Não perca essa chance.
+      <span className="text-xs sm:text-sm font-medium text-white/70 tracking-wide">
+        ✨ Cupom de desconto ativo
       </span>
-      <Zap className="w-5 h-5 text-white animate-pulse" fill="currentColor" />
     </motion.div>
   );
 };
