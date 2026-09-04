@@ -72,6 +72,8 @@ export const buildRegistrationUrl = (
 
   if (coupon) {
     checkoutUrl.searchParams.set("coupon", coupon);
+  } else if (autoDiscount) {
+    checkoutUrl.searchParams.set("coupon", "COPA26");
   }
 
   // Se o afiliado na URL for o Guilherme ou se o cupom digitado for o Guilherme
