@@ -97,8 +97,8 @@ const Hero = () => {
       };
 
   const navigate = useNavigate();
-  const { affiliateSlug } = useAffiliate();
-  const planosUrl = affiliateSlug ? `/${affiliateSlug}/planos` : "/planos";
+  const { affiliateSlug, autoDiscount } = useAffiliate();
+  const planosUrl = affiliateSlug ? `/${affiliateSlug}${autoDiscount ? "-vip" : ""}/planos` : "/planos";
 
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });

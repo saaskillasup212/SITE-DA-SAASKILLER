@@ -17,10 +17,10 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { affiliateSlug } = useAffiliate();
+  const { affiliateSlug, autoDiscount } = useAffiliate();
 
   const isExtensionPage = location.pathname === "/extensao-creditos-lovable" || location.pathname === "/creditos-infinitos";
-  const planosUrl = affiliateSlug ? `/${affiliateSlug}/planos` : "/planos";
+  const planosUrl = affiliateSlug ? `/${affiliateSlug}${autoDiscount ? "-vip" : ""}/planos` : "/planos";
 
   const navLinks = baseNavLinks.map((link) => {
     if (link.to === "/extensao-creditos-lovable" && isExtensionPage) {
