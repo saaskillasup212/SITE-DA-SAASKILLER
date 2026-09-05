@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import {
   buildRegistrationUrl,
+  getNormalizedCoupon,
   getSaaSKillerPriceCents,
   OFFER,
   SAASKILLER_PRICING,
@@ -213,7 +214,8 @@ const PricingPlans = () => {
   };
 
   const hasAnyCoupon = Boolean(activeCoupon) || autoDiscount;
-  const isAffiliateCoupon = Boolean(normalizedAffiliate) || ["MATHIAS", "RUAN", "GUILHERME", "AYANNA", "LEANDRO"].includes(activeCoupon);
+  const normalizedActiveCoupon = activeCoupon ? getNormalizedCoupon(activeCoupon).toUpperCase() : "";
+  const isAffiliateCoupon = Boolean(normalizedAffiliate) || ["MATHIAS", "RUAN", "GUILHERME", "AYANNA", "LEANDRO"].includes(normalizedActiveCoupon);
   const isDiscounted = (hasAnyCoupon && normalizedAffiliate !== "ruan") || autoDiscount;
   
   const monthlyAmountCents = getSaaSKillerPriceCents(
