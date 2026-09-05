@@ -127,13 +127,24 @@ const PricingPlans = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const viewedRef = useRef(false);
   const { shouldReduceMotion } = usePerformance();
-  const { normalizedAffiliate, autoDiscount } = useAffiliate();
+  const { affiliateSlug, normalizedAffiliate, autoDiscount } = useAffiliate();
   const [couponInput, setCouponInput] = useState("");
-  const [appliedCoupon, setAppliedCoupon] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState(() => {
+    // Se for um link VIP de afiliado, já aplica o slug do afiliado como cupom
+    if (autoDiscount && affiliateSlug) {
+      return affiliateSlug.toUpperCase();
+    }
+    return "";
+  });
   const [couponError, setCouponError] = useState("");
 
-  // O activeCoupon agora é APENAS o cupom digitado pelo usuário
   const activeCoupon = appliedCoupon;
+
+  useEffect(() => {
+    if (autoDiscount && affiliateSlug && !appliedCoupon) {
+      setAppliedCoupon(affiliateSlug.toUpperCase());
+    }
+  }, [autoDiscount, affiliateSlug, appliedCoupon]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -184,17 +195,16 @@ const PricingPlans = () => {
   };
 
   const handleCTA = (cycle: BillingCycle) => {
-    const isRuanAffiliate = activeCoupon === "RUAN";
-    const isAffiliateOnlyCoupon = activeCoupon === "MATHIAS" || activeCoupon === "RUAN" || activeCoupon === "GUILHERME";
-    const priceType = activeCoupon && !isAffiliateOnlyCoupon ? "discounted" : "regular";
+    const isRuanAffiliate = normalizedAffiliate === "ruan" || activeCoupon === "RUAN";
+    const priceType = (activeCoupon || autoDiscount) && normalizedAffiliate !== "ruan" ? "discounted" : "regular";
     const target = isRuanAffiliate
       ? RUAN_CHECKOUT_URLS[cycle][priceType]
-      : buildRegistrationUrl(cycle, activeCoupon || undefined, normalizedAffiliate, autoDiscount);
+      : buildRegistrationUrl(cycle, activeCoupon || affiliateSlug || undefined, normalizedAffiliate, autoDiscount);
     const eventParameters = {
       plan: OFFER.plan,
       cycle,
       origin: "pricing",
-      coupon_applied: Boolean(activeCoupon),
+      coupon_applied: Boolean(activeCoupon) || autoDiscount,
     };
 
     trackEvent("pricing_cta_clicked", eventParameters);
@@ -203,10 +213,9 @@ const PricingPlans = () => {
   };
 
   const hasAnyCoupon = Boolean(activeCoupon) || autoDiscount;
-  const isAffiliateCoupon = activeCoupon === "MATHIAS" || activeCoupon === "RUAN" || activeCoupon === "GUILHERME" || activeCoupon === "AYANNA" || activeCoupon === "LEANDRO";
-  const isDiscounted = (Boolean(activeCoupon) && !isAffiliateCoupon) || autoDiscount;
+  const isAffiliateCoupon = Boolean(normalizedAffiliate) || ["MATHIAS", "RUAN", "GUILHERME", "AYANNA", "LEANDRO"].includes(activeCoupon);
+  const isDiscounted = (hasAnyCoupon && normalizedAffiliate !== "ruan") || autoDiscount;
   
-  // Removido o isSupportingAffiliate a pedido do usuário
   const monthlyAmountCents = getSaaSKillerPriceCents(
     "monthly",
     isDiscounted,
@@ -284,7 +293,7 @@ const PricingPlans = () => {
                 <input
                   id="plans-coupon-input"
                   className="plans-coupon__input"
-                  value={autoDiscount && !activeCoupon ? "COPA26" : couponInput}
+                  value={activeCoupon || (autoDiscount ? "COPA26" : couponInput)}
                   onChange={(event) => {
                     setCouponInput(event.target.value.toUpperCase());
                     setCouponError("");
