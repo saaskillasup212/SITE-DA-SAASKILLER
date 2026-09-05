@@ -1941,6 +1941,10 @@ All colors MUST be HSL.
     #060508;
 }
 
+.has-announcement .team-section {
+  --header-height: 114px;
+}
+
 .team-section--cinematic {
   height: 240svh;
 }

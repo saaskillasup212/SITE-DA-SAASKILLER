@@ -14,10 +14,13 @@ import FinalCTA from "@/components/FinalCTA";
 import SocialProof from "@/components/SocialProof";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import { useAffiliate } from "@/contexts/AffiliateContext";
 
 const Index = () => {
+  const { autoDiscount } = useAffiliate();
+
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-void)" }}>
+    <div className={`min-h-screen ${autoDiscount ? "has-announcement" : ""}`} style={{ background: "var(--bg-void)" }}>
       <Header />
       <main>
         <Hero />
