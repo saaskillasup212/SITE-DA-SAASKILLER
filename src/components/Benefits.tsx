@@ -114,7 +114,7 @@ const ListMockup = ({ title, icon: Icon, items = [] }: { title: string; icon: Lu
   </div>
 );
 
-const ContentMockup = ({ title, icon: Icon, videoTitle, items }: { title: string; icon: LucideIcon; videoTitle: string; items: string[] }) => (
+const ContentMockup = ({ title, icon: Icon, videoTitle = "Vídeo Aula", items = [] }: { title: string; icon: LucideIcon; videoTitle?: string; items?: string[] }) => (
   <div className="w-full h-[159px] bg-[#09090b] flex overflow-hidden border-t-0 rounded-b-md relative select-none font-sans">
     <div className="w-[38%] border-r border-white/[0.08] bg-white/[0.02] p-2.5 flex flex-col gap-1.5">
       <div className="flex items-center gap-1.5 mb-1.5">
